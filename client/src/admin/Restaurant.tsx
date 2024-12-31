@@ -5,8 +5,9 @@ import {
   RestaurantFormSchema,
   restaurantFromSchema,
 } from "@/schema/restaurantSchema";
+import { useRestaurantStore } from "@/store/useRestaurantStore";
 import { Loader2 } from "lucide-react";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 
 const Restaurant = () => {
   const [input, setInput] = useState<RestaurantFormSchema>({
@@ -17,33 +18,76 @@ const Restaurant = () => {
     cuisines: [],
     imageFile: undefined,
   });
-
   const [errors, setErrors] = useState<Partial<RestaurantFormSchema>>({});
+  const {
+    loading,
+    restaurant,
+    updateRestaurant,
+    createRestaurant,
+    getRestaurant,
+  } = useRestaurantStore();
+
   const changeEventHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type } = e.target;
-    setInput({
-      ...input,
-      [name]: type === "number" ? Number(value) : value,
-    });
+    setInput({ ...input, [name]: type === "number" ? Number(value) : value });
   };
 
-  const submitHandler = (e: FormEvent<HTMLFormElement>) => {
+  const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const result = restaurantFromSchema.safeParse(input);
     if (!result.success) {
-      console.log("Validation errors:", result.error.formErrors.fieldErrors);
       const fieldErrors = result.error.formErrors.fieldErrors;
       setErrors(fieldErrors as Partial<RestaurantFormSchema>);
       return;
     }
-    console.log("Validation success:", input);
+    // add restaurant api implementation start from here
+    try {
+      const formData = new FormData();
+      formData.append("restaurantName", input.restaurantName);
+      formData.append("city", input.city);
+      formData.append("country", input.country);
+      formData.append("deliveryTime", input.deliveryTime.toString());
+      formData.append("cuisines", JSON.stringify(input.cuisines));
+
+      if (input.imageFile) {
+        formData.append("imageFile", input.imageFile);
+      }
+
+      if (restaurant) {
+        // update
+        await updateRestaurant(formData);
+      } else {
+        // create
+        await createRestaurant(formData);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const loading = false;
-  const restaurent = false;
+  useEffect(() => {
+    const fetchRestaurant = async () => {
+      await getRestaurant();
+      if (restaurant) {
+        setInput({
+          restaurantName: restaurant.restaurantName || "",
+          city: restaurant.city || "",
+          country: restaurant.country || "",
+          deliveryTime: restaurant.deliveryTime || 0,
+          cuisines: restaurant.cuisines
+            ? restaurant.cuisines.map((cuisine: string) => cuisine)
+            : [],
+          imageFile: undefined,
+        });
+      }
+    };
+    fetchRestaurant();
+    // console.log(restaurant);
+  }, []);
+
   return (
-    <div className="max-w-6xl mx-auto  my-10">
+    <div className="max-w-6xl mx-auto my-10">
       <div>
         <div>
           <h1 className="font-extrabold text-2xl mb-5">Add Restaurants</h1>
@@ -60,7 +104,9 @@ const Restaurant = () => {
                   placeholder="Enter your restaurant name"
                 />
                 {errors && (
-                  <span className="text-red-600">{errors.restaurantName}</span>
+                  <span className="text-xs text-red-600 font-medium">
+                    {errors.restaurantName}
+                  </span>
                 )}
               </div>
               <div>
@@ -72,7 +118,11 @@ const Restaurant = () => {
                   onChange={changeEventHandler}
                   placeholder="Enter your city name"
                 />
-                {errors && <span className="text-red-600">{errors.city}</span>}
+                {errors && (
+                  <span className="text-xs text-red-600 font-medium">
+                    {errors.city}
+                  </span>
+                )}
               </div>
               <div>
                 <Label>Country</Label>
@@ -84,7 +134,9 @@ const Restaurant = () => {
                   placeholder="Enter your country name"
                 />
                 {errors && (
-                  <span className="text-red-600">{errors.country}</span>
+                  <span className="text-xs text-red-600 font-medium">
+                    {errors.country}
+                  </span>
                 )}
               </div>
               <div>
@@ -97,7 +149,9 @@ const Restaurant = () => {
                   placeholder="Enter your delivery time"
                 />
                 {errors && (
-                  <span className="text-red-600">{errors.deliveryTime}</span>
+                  <span className="text-xs text-red-600 font-medium">
+                    {errors.deliveryTime}
+                  </span>
                 )}
               </div>
               <div>
@@ -112,32 +166,40 @@ const Restaurant = () => {
                   placeholder="e.g. Momos, Biryani"
                 />
                 {errors && (
-                  <span className="text-red-600">{errors.cuisines}</span>
+                  <span className="text-xs text-red-600 font-medium">
+                    {errors.cuisines}
+                  </span>
                 )}
               </div>
               <div>
                 <Label>Upload Restaurant Banner</Label>
-                <Input type="file" accept="image/*" name="imageFile" />
+                <Input
+                  onChange={(e) =>
+                    setInput({
+                      ...input,
+                      imageFile: e.target.files?.[0] || undefined,
+                    })
+                  }
+                  type="file"
+                  accept="image/*"
+                  name="imageFile"
+                />
                 {errors && (
-                  <span className="text-red-600">
-                    {errors.imageFile?.name || "Image file is required"}
+                  <span className="text-xs text-red-600 font-medium">
+                    {errors.imageFile?.name}
                   </span>
                 )}
               </div>
             </div>
-
             <div className="my-5 w-fit">
-              {/* if loading is true  */}
               {loading ? (
-                <Button disabled>
-                  {" "}
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" /> please wait
+                <Button className="bg-red-600 hover:bg-red">
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Please wait
                 </Button>
               ) : (
-                // loading is false
-                <Button>
-                  {" "}
-                  {restaurent
+                <Button className="bg-red-500 hover:bg-red">
+                  {restaurant
                     ? "Update Your Restaurant"
                     : "Add Your Restaurant"}
                 </Button>

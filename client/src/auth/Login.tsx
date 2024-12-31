@@ -6,7 +6,7 @@ import { useUserStore } from "@/store/useUserStore";
 
 import { Loader2, LockKeyhole, Mail } from "lucide-react";
 import { ChangeEvent, FormEvent, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [input, setInput] = useState<LoginInputState>({
@@ -14,8 +14,8 @@ const Login = () => {
     password: "",
   });
   const [errors, setErrors] = useState<Partial<LoginInputState>>({});
-  const {loading,login}=useUserStore();
-
+  const { loading, login } = useUserStore();
+  const navigate = useNavigate();
   const changeEventHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setInput({ ...input, [name]: value });
@@ -31,11 +31,14 @@ const Login = () => {
     }
     try {
       await login(input);
+      navigate("/");
     } catch (error) {
       console.log(error);
+      {
+        console.log(error);
+      }
     }
   };
-
 
   return (
     <div className="flex items-center justify-center min-h-screen">

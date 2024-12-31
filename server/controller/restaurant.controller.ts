@@ -9,6 +9,7 @@ export const createRestaurant = async (req: Request, res: Response) => {
     const { restaurantName, city, country, deliveryTime, cuisines } = req.body;
     const file = req.file;
 
+    console.log(restaurantName, city, country, deliveryTime, cuisines);
     const restaurant = await Restaurant.findOne({ user: req.id });
     if (restaurant) {
       return res.status(400).json({

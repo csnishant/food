@@ -7,29 +7,30 @@ import {
   Plus,
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { FormEvent, useRef, useState } from "react";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { Button } from "./ui/button";
-import { FormEvent, useRef, useState } from "react";
+import { useUserStore } from "@/store/useUserStore";
 
 const Profile = () => {
-  const imageRef = useRef<HTMLInputElement | null>(null);
+  const { user, updateProfile } = useUserStore();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [profileData, setProfileData] = useState({
-    fullname: "",
-    email: "",
-    address: "",
-    city: "",
-    country: "",
-    profilePicture: "",
+    fullname: user?.fullname || "",
+    email: user?.email || "",
+    address: user?.address || "",
+    city: user?.city || "",
+    country: user?.country || "",
+    profilePicture: user?.profilePicture || "",
   });
+  const imageRef = useRef<HTMLInputElement | null>(null);
   const [selectedProfilePicture, setSelectedProfilePicture] = useState<string>(
     profileData.profilePicture || ""
   );
-  const loading = false;
 
   const fileChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -46,15 +47,20 @@ const Profile = () => {
 
   const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-
     setProfileData({ ...profileData, [name]: value });
   };
 
-  const updateProfileHandler = (e: FormEvent<HTMLFormElement>) => {
+  const updateProfileHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(profileData);
-    //update profile api implementation
+    try {
+      setIsLoading(true);
+      await updateProfile(profileData);
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+    }
   };
+
   return (
     <form onSubmit={updateProfileHandler} className="max-w-7xl mx-auto my-5">
       <div className="flex items-center justify-between">
@@ -116,7 +122,7 @@ const Profile = () => {
             <Label>City</Label>
             <input
               name="city"
-              value={profileData.email}
+              value={profileData.city}
               onChange={changeHandler}
               className="w-full text-gray-600 bg-transparent focus-visible:ring-0 focus-visible:border-transparent outline-none border-none"
             />
@@ -128,26 +134,26 @@ const Profile = () => {
             <Label>Country</Label>
             <input
               name="country"
-              value="Countryland"
-              readOnly
+              value={profileData.country}
+              onChange={changeHandler}
               className="w-full text-gray-600 bg-transparent focus-visible:ring-0 focus-visible:border-transparent outline-none border-none"
             />
           </div>
         </div>
       </div>
       <div className="text-center">
-        {loading ? (
+        {isLoading ? (
           <Button
             disabled
-            className="  text-green hover:bg-hoverGreen hover:text-black">
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            please wait
+            className=" text-green hover:bg-hoverGreen hover:text-black">
+            <Loader2 className="mr-2 w-4 h-4 animate-spin" />
+            Please wait
           </Button>
         ) : (
           <Button
             type="submit"
             className=" text-green hover:bg-hoverGreen hover:text-black">
-            Login
+            Update
           </Button>
         )}
       </div>

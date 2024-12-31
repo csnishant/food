@@ -1,8 +1,12 @@
-import { MenuItem } from "@/types/restaurantType";
 import { Card, CardContent, CardFooter } from "./ui/card";
 import { Button } from "./ui/button";
+import { MenuItem } from "@/types/restaurantTypes";
+import { useCartStore } from "@/store/userCartStore";
+import { useNavigate } from "react-router-dom";
 
 const AvailableMenu = ({ menus }: { menus: MenuItem[] }) => {
+  const { addToCart } = useCartStore();
+  const navigate = useNavigate();
   return (
     <div className="md:p-4">
       <h1 className="text-xl md:text-2xl font-extrabold mb-6">
@@ -25,8 +29,11 @@ const AvailableMenu = ({ menus }: { menus: MenuItem[] }) => {
             </CardContent>
             <CardFooter className="p-4">
               <Button
-                className="bg-hoverGreen text-black hover:bg-teal-600  font-semibold py-2 px-4 rounded-full shadow-md transition-colors duration-200"
-              >
+                onClick={() => {
+                  addToCart(menu);
+                  navigate("/cart");
+                }}
+                className="bg-hoverGreen text-black hover:bg-teal-600  font-semibold py-2 px-4 rounded-full shadow-md transition-colors duration-200">
                 Add to Cart
               </Button>
             </CardFooter>

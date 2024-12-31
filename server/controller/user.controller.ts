@@ -98,18 +98,25 @@ export const login = async (req: Request, res: Response) => {
 export const verifyEmail = async (req: Request, res: Response) => {
   try {
     const { verificationCode } = req.body;
-    console.log(verificationCode);
+    console.log("Verification Code from request:", verificationCode);
+
+    // Retrieve user and log details
     const user = await User.findOne({
       verificationToken: verificationCode,
-      verificationTokenExpiresAts: { $gt: Date.now() },
+      verificationTokenExpiresAt: { $gt: Date.now() },
     }).select("-password");
 
     if (!user) {
+      console.log("User not found or token expired.");
       return res.status(400).json({
         success: false,
         message: "Invalid or expired verification token",
       });
     }
+
+    // Log the retrieved token details for comparison
+    console.log("Stored Verification Token:", user.verificationToken);
+    console.log("Token Expiry Time:", user.verificationTokenExpiresAt);
 
     user.isVerified = true;
     user.verificationToken = undefined;
