@@ -1,7 +1,7 @@
 import { Input } from "./ui/input";
 import { Search } from "lucide-react";
 import { Button } from "./ui/button";
-import HereImage from "@/assets/hero_pizza.png";
+import HereImage from "@/assets/2455.jpg";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -44,7 +44,6 @@ const HeroSection = () => {
           className="object-cover w-full max-h-[500px]"
         />
       </div>
-      
     </div>
   );
 };
