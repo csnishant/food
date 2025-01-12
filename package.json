@@ -2,7 +2,7 @@
   "name": "server",
   "version": "1.0.0",
   "main": "index.js",
-  "type": "module",
+ 
   "scripts": {
     "dev": "nodemon server/index.ts",
     "stripe": "stripe listen --forward-to localhost:8000/api/v1/order/web",
@@ -39,6 +39,6 @@
     "@types/node": "^22.5.1",
     "nodemon": "^3.1.4",
     "ts-node": "^10.9.2",
-    "typescript": "^5.5.4"
+    "typescript": "^5.7.3"
   }
 }
