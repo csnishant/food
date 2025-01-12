@@ -8,11 +8,14 @@ import userRoute from "./routes/user.route";
 import orderRouter from "./routes/order.route";
 import restaurantRoute from "./routes/restaurant.route";
 import menuRoute from "./routes/menu.route";
+import path from "path";
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+const DIRNAME = path.resolve();
 
 // Middleware Configuration
 app.use(bodyParser.json({ limit: "10mb" }));
@@ -32,6 +35,10 @@ app.use("/api/v1/restaurant", restaurantRoute);
 app.use("/api/v1/menu", menuRoute);
 app.use("/api/v1/order", orderRouter);
 
+app.use(express.static(path.join(DIRNAME, "/client/dist")));
+app.use("*", (_, res) => {
+  res.sendFile(path.resolve(DIRNAME, "client", "dist", "index.html"));
+});
 // Start Server
 app.listen(PORT, () => {
   connectDB(); // Ensure DB connection function works correctly

@@ -16,7 +16,6 @@ import { useOrderStore } from "@/store/useOrderStore";
 import { Loader2 } from "lucide-react";
 import { useCartStore } from "@/store/userCartStore";
 import { CheckoutSessionRequest } from "@/types/orderTypes";
-import { toast } from "sonner";
 
 const CheckoutConfirmPage = ({
   open,
@@ -57,11 +56,14 @@ const CheckoutConfirmPage = ({
         restaurantId: restaurant?._id as string,
       };
       await createCheckoutSession(checkoutData);
-      toast.error("Please wait while we redirect you to the payment page");
-      console.log(checkoutData);
+      
+      console.log(checkoutData); 
+    
+      console.log
     
     } catch (error) {
       console.log(error);
+      
     }
   };
 

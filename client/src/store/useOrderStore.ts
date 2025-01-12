@@ -1,5 +1,6 @@
 import { CheckoutSessionRequest, OrderState } from "@/types/orderTypes";
 import axios from "axios";
+import { toast } from "sonner";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
@@ -27,7 +28,8 @@ export const useOrderStore = create<OrderState>()(
           );
           window.location.href = response.data.session.url;
           set({ loading: false });
-        } catch (error) {
+        } catch (error: any) {
+          toast.error(error.response.data.message);
           set({ loading: false });
         }
       },

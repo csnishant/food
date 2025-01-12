@@ -98,7 +98,7 @@ export const login = async (req: Request, res: Response) => {
 export const verifyEmail = async (req: Request, res: Response) => {
   try {
     const { verificationCode } = req.body;
-    console.log("Verification Code from request:", verificationCode);
+    // console.log("Verification Code from request:", verificationCode);
 
     // Retrieve user and log details
     const user = await User.findOne({
@@ -115,8 +115,8 @@ export const verifyEmail = async (req: Request, res: Response) => {
     }
 
     // Log the retrieved token details for comparison
-    console.log("Stored Verification Token:", user.verificationToken);
-    console.log("Token Expiry Time:", user.verificationTokenExpiresAt);
+    // console.log("Stored Verification Token:", user.verificationToken);
+    // console.log("Token Expiry Time:", user.verificationTokenExpiresAt);
 
     user.isVerified = true;
     user.verificationToken = undefined;

@@ -23,7 +23,7 @@ export const useUserStore = create<any>()(
             },
           });
           if (response.data.success) {
-            console.log(response.data);
+            // console.log(response.data);
             toast.success(response.data.message);
             set({
               loading: false,
@@ -44,7 +44,7 @@ export const useUserStore = create<any>()(
             },
           });
           if (response.data.success) {
-            console.log(response.data);
+            // console.log(response.data);
             toast.success(response.data.message);
             set({
               loading: false,

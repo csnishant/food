@@ -25,7 +25,7 @@ const FilterPage = () => {
   return (
     <div className="md:w-72">
       <div className="flex items-center justify-between">
-        <h1 className="font-medium text-lg">Filter by cuisines</h1>
+        <h1 className="font-medium text-lg">Filter by ssines</h1>
         {/* Static button without action */}
         <Button variant={"link"} onClick={resetAppliedFilter}>
           Reset

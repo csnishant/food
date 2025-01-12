@@ -18,7 +18,8 @@ import { CartItem } from "@/types/cartTypes";
 
 const Cart = () => {
   const [open, setOpen] = useState<boolean>(false);
-  const { cart, decrementQuantity, incrementQuantity } = useCartStore();
+  const { cart, decrementQuantity, incrementQuantity, removeFromTheCart } =
+    useCartStore();
 
   let totalAmount = cart.reduce((acc, ele) => {
     return acc + ele.price * ele.quantity;
@@ -78,6 +79,7 @@ const Cart = () => {
               <TableCell>{item.price * item.quantity}</TableCell>
               <TableCell className="text-right">
                 <Button
+                  onClick={() => removeFromTheCart(item._id)}
                   size={"sm"}
                   className="bg-green text-black hover:bg-hoverGreen ">
                   Remove

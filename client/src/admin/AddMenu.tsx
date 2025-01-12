@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Loader2, Plus } from "lucide-react";
+import { Plus } from "lucide-react";
 import React, { FormEvent, useState } from "react";
 import EditMenu from "./EditMenu";
 import { MenuFormSchema, menuSchema } from "@/schema/menuSchema";
@@ -28,7 +28,7 @@ const AddMenu = () => {
   const [editOpen, setEditOpen] = useState<boolean>(false);
   const [selectedMenu, setSelectedMenu] = useState<any>();
   const [error, setError] = useState<Partial<MenuFormSchema>>({});
-  const { loading, createMenu } = useMenuStore();
+  const {  createMenu } = useMenuStore();
   const { restaurant } = useRestaurantStore();
 
   const changeEventHandler = (e: React.ChangeEvent<HTMLInputElement>) => {

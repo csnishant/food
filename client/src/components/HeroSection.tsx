@@ -44,6 +44,7 @@ const HeroSection = () => {
           className="object-cover w-full max-h-[500px]"
         />
       </div>
+      
     </div>
   );
 };
