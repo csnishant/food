@@ -23,15 +23,15 @@ app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 app.use(express.json());
 app.use(cookieParser());
 
-// const corsOptions = {
-//   origin: "https://online-food-app-ji19.onrender.com", // Frontend origin
-//   credentials: true,
-// };
-
 const corsOptions = {
-  origin: "http://localhost:5173", // Frontend origin
+  origin: "https://online-food-app-ji19.onrender.com", // Frontend origin
   credentials: true,
 };
+
+// const corsOptions = {
+//   origin: "http://localhost:5173", // Frontend origin
+//   credentials: true,
+// };
 
 app.use(cors(corsOptions));
 
