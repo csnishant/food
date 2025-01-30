@@ -32,7 +32,7 @@ const HeroSection = () => {
           <Search className="text-gray-500 absolute inset-y-2 left-2" />
           <Button
             onClick={() => navigate(`/search/${searchText}`)}
-            className="bg-green hover:bg-hoverGreen">
+            className="bg-button hover:bg-hover">
             Search
           </Button>
         </div>

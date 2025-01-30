@@ -22,19 +22,18 @@ const ResetPassword = () => {
             onChange={(e) => setNewPassword(e.target.value)}
             placeholder="Enter new password"
             className="pl-10"
-          
           />
           <Lock className="absolute inset-y-2 left-2 text-gray-600 pointer-events-none" />
         </div>
         {loading ? (
           <Button
             disabled
-            className="w-full text-green hover:bg-hoverGreen hover:text-black">
+            className="w-full text-button hover:bg-hover hover:text-black">
             <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Please wait
           </Button>
         ) : (
-          <Button className=" w-full text-green hover:bg-hoverGreen hover:text-black">
-           Save new password
+          <Button className=" w-full text-button hover:bg-hover hover:text-black">
+            Save new password
           </Button>
         )}
         <span className="text-center">

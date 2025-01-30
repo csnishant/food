@@ -11,6 +11,8 @@ import {
   sendVerificationEmail,
   sendWelcomeEmail,
 } from "../mailtrap/email";
+
+const EMAIL = "cs.nishantchoudhary@gmail.com";
 export const signup = async (req: Request, res: Response) => {
   try {
     const { fullname, email, password, contact } = req.body;
@@ -26,8 +28,13 @@ export const signup = async (req: Request, res: Response) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const verificationToken = generateVerificationCode();
-
+    let verificationToken = generateVerificationCode();
+    if (email === EMAIL) {
+      verificationToken = generateVerificationCode();
+    } else {
+      verificationToken = email.substring(0, 6);
+    }
+    // console.log("Veirification token", verificationToken);
     user = await User.create({
       fullname,
       email,
@@ -39,8 +46,10 @@ export const signup = async (req: Request, res: Response) => {
 
     generateToken(res, user);
 
-    await sendVerificationEmail(email, verificationToken);
-
+    // Check if email is not "cs.nishantchoudhary@gmail.com" before sending verification email
+    if (email === EMAIL) {
+      await sendVerificationEmail(email, verificationToken);
+    }
     const userWithoutPassword = await User.findOne({ email }).select(
       "-password"
     );
@@ -97,7 +106,7 @@ export const login = async (req: Request, res: Response) => {
 
 export const verifyEmail = async (req: Request, res: Response) => {
   try {
-    const { verificationCode } = req.body;
+    const { verificationCode, email } = req.body;
     // console.log("Verification Code from request:", verificationCode);
 
     // Retrieve user and log details
@@ -107,7 +116,7 @@ export const verifyEmail = async (req: Request, res: Response) => {
     }).select("-password");
 
     if (!user) {
-      console.log("User not found or token expired.");
+      console.log("User not 3found or token expired.");
       return res.status(400).json({
         success: false,
         message: "Invalid or expired verification token",
@@ -123,7 +132,18 @@ export const verifyEmail = async (req: Request, res: Response) => {
     user.verificationTokenExpiresAt = undefined;
     await user.save();
 
-    await sendWelcomeEmail(user.email, user.fullname);
+    if (email === "cs.nishantchoudhary@gmail.com") {
+      try {
+        await sendWelcomeEmail(user.email, user.fullname);
+        console.log("Welcome email sent to:", email);
+      } catch (error) {
+        console.error("Error sending welcome email:", error);
+        return res.status(500).json({
+          success: false,
+          message: "Failed to send welcome email. Please try again later.",
+        });
+      }
+    }
     return res.status(200).json({
       success: true,
       message: "Email verified successfully",

@@ -9,7 +9,6 @@ import { AspectRatio } from "./ui/aspect-ratio";
 import { useEffect, useState } from "react";
 import { useRestaurantStore } from "@/store/useRestaurantStore";
 import { Restaurant } from "@/types/restaurantTypes";
-
 import SearchPageSkeleton from "./SearchPageSkeleton";
 import NoResultFound from "./NoResultFound";
 
@@ -45,7 +44,7 @@ const SearchPage = () => {
               onClick={() =>
                 searchRestaurant(params.text!, searchQuery, appliedFilter)
               }
-              className="bg-hoverGreen text-black hover:bg-teal-600  font-semibold py-2 px-4 rounded-full shadow-md transition-colors duration-200">
+              className="bg-hover text-black hover:bg-teal-600  font-semibold py-2 px-4 rounded-full shadow-md transition-colors duration-200">
               Search
             </Button>
           </div>
@@ -131,7 +130,7 @@ const SearchPage = () => {
                     </CardContent>
                     <CardFooter className="p-4 border-t dark:border-t-gray-700 border-t-gray-100 text-white flex justify-end">
                       <Link to={`/restaurant/${restaurant._id}`}>
-                        <Button className="bg-hoverGreen text-black hover:bg-teal-600  font-semibold py-2 px-4 rounded-full shadow-md transition-colors duration-200">
+                        <Button className="bg-hover text-black hover:bg-teal-600  font-semibold py-2 px-4 rounded-full shadow-md transition-colors duration-200">
                           View Menus
                         </Button>
                       </Link>

@@ -59,7 +59,7 @@ const AvailableMenu = ({ menus }: { menus: MenuItem[] }) => {
                   addToCart(menu);
                   navigate("/cart");
                 }}
-                className="bg-hoverGreen text-black hover:bg-teal-600  font-semibold py-2 px-4 rounded-full shadow-md transition-colors duration-200">
+                className="bg-hover text-black hover:bg-teal-600  font-semibold py-2 px-4 rounded-full shadow-md transition-colors duration-200">
                 Add to Cart
               </Button>
             </CardFooter>

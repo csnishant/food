@@ -145,14 +145,14 @@ const Profile = () => {
         {isLoading ? (
           <Button
             disabled
-            className=" text-green hover:bg-hoverGreen hover:text-black">
+            className=" text-button hover:bg-hover hover:text-black">
             <Loader2 className="mr-2 w-4 h-4 animate-spin" />
             Please wait
           </Button>
         ) : (
           <Button
             type="submit"
-            className=" text-green hover:bg-hoverGreen hover:text-black">
+            className=" text-button hover:bg-hover hover:text-black">
             Update
           </Button>
         )}
@@ -162,3 +162,5 @@ const Profile = () => {
 };
 
 export default Profile;
+
+

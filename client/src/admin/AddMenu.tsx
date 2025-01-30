@@ -66,7 +66,7 @@ const AddMenu = () => {
         </h1>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger>
-            <Button className="bg-green text-black hover:bg-hoverGreen">
+            <Button className="bg-button text-black hover:bg-hover">
               <Plus className="mr-2" />
               Add Menus
             </Button>
@@ -137,7 +137,7 @@ const AddMenu = () => {
               <DialogFooter className="mt-5">
                 <Button
                   type="submit"
-                  className="bg-green text-black hover:bg-hoverGreen">
+                  className="bg-button text-black hover:bg-hover">
                   Submit
                 </Button>
               </DialogFooter>
@@ -175,7 +175,7 @@ const AddMenu = () => {
                   setEditOpen(true);
                 }}
                 size={"sm"}
-                className="bg-green text-black hover:bg-hoverGreen2">
+                className="bg-button text-black hover:bg-hover">
                 Edit
               </Button>
             </div>

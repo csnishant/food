@@ -129,17 +129,20 @@ const Signup = () => {
           {loading ? (
             <Button
               type="submit"
-              className=" w-full text-green hover:bg-hoverGreen hover:text-black">
+              className=" w-full text-button hover:bg-hover hover:text-black">
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
               please wait
             </Button>
           ) : (
-            <Button
-              type="submit"
-              className=" w-full text-green hover:bg-hoverGreen hover:text-black">
+            <Button type="submit" className="w-full bg-button hover:bg-hover  ">
               Signup
             </Button>
           )}
+          <div className="mt-4">
+            <Link to="/forget-password" className="pt-4">
+              Forget Password
+            </Link>
+          </div>
         </div>
         <Separator />
         <p className="mt-2">Don't have an account? </p>

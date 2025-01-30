@@ -57,7 +57,7 @@ const Cart = () => {
                     onClick={() => decrementQuantity(item._id)}
                     size={"icon"}
                     variant={"outline"}
-                    className="rounded-full bg-gray-200">
+                    className="rounded-full bg-black-200 ">
                     <Minus />
                   </Button>
                   <Button
@@ -70,7 +70,7 @@ const Cart = () => {
                   <Button
                     onClick={() => incrementQuantity(item._id)}
                     size={"icon"}
-                    className="rounded-full bg-green hover:bg-hoverGreen "
+                    className="rounded-full  text-black bg-hover hover:bg-button hover:text-white "
                     variant={"outline"}>
                     <Plus />
                   </Button>
@@ -81,7 +81,7 @@ const Cart = () => {
                 <Button
                   onClick={() => removeFromTheCart(item._id)}
                   size={"sm"}
-                  className="bg-green text-black hover:bg-hoverGreen ">
+                  className="rounded-full  bg-hover hover:bg-button hover:text-white  ">
                   Remove
                 </Button>
               </TableCell>
@@ -98,7 +98,7 @@ const Cart = () => {
       <div className="flex justify-end my-5">
         <Button
           onClick={() => setOpen(true)}
-          className="bg-green text-black hover:bg-hoverGreen">
+          className="  bg-hover hover:bg-button hover:text-white ">
           Proceed To Checkout
         </Button>
       </div>

@@ -2,10 +2,9 @@
   "name": "server",
   "version": "1.0.0",
   "main": "index.js",
- 
   "scripts": {
     "dev": "nodemon server/index.ts",
-    "stripe": "stripe listen --forward-to localhost:8000/api/v1/order/web",
+    "stripe": "stripe listen --forword-to localhost:8000/api/v1/order/webhook",
     "build": "npm install && npm install --prefix client && npm run build --prefix client",
     "start": "nodemon server/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -19,7 +18,6 @@
     "cloudinary": "^2.4.0",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
-    "crypto": "^1.0.1",
     "crypto-js": "^4.2.0",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",

@@ -17,7 +17,7 @@ const Orders = () => {
       <div className="space-y-8">
         {/* Static Restaurant Order display */}
         <div className="flex flex-col md:flex-row justify-between items-start sm:items-center bg-white dark:bg-gray-800 shadow-lg rounded-xl p-6 sm:p-8 border border-gray-200 dark:border-gray-700">
-          <div className="flex-1 mb-6 sm:mb-0">
+          <div className="falex-1 mb-6 sm:mb-0">
             <h1 className="text-xl font-semibold text-gray-800 dark:text-gray-100">
               John Doe
             </h1>

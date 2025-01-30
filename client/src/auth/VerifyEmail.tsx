@@ -70,18 +70,12 @@ const VerifyEmail = () => {
             ))}
           </div>
           {loading ? (
-            <Button
-              type="submit"
-              className=" w-full mt-6 text-green hover:bg-hoverGreen hover:text-black">
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              please wait
+            <Button disabled className=" mt-6 w-full">
+              <Loader2 className="mr-2 w-4 h-4 animate-spin" />
+              Please wait
             </Button>
           ) : (
-            <Button
-              type="submit"
-              className=" w-full mt-6 text-green hover:bg-hoverGreen hover:text-black">
-              Verify Email
-            </Button>
+            <Button className=" mt-6 w-full">Verify</Button>
           )}
         </form>
       </div>

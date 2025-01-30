@@ -147,7 +147,7 @@ export const searchRestaurant = async (req: Request, res: Response) => {
       .filter((cuisine) => cuisine);
     const query: any = {};
     // basic search based on searchText (name ,city, country)
-    console.log(selectedCuisines);
+    console.log("search cuisines",selectedCuisines);
 
     if (searchText) {
       query.$or = [

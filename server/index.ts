@@ -23,10 +23,16 @@ app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 app.use(express.json());
 app.use(cookieParser());
 
+// const corsOptions = {
+//   origin: "https://online-food-app-ji19.onrender.com", // Frontend origin
+//   credentials: true,
+// };
+
 const corsOptions = {
-  origin: "https://online-food-app-ji19.onrender.com", // Frontend origin
+  origin: "http://localhost:5173", // Frontend origin
   credentials: true,
 };
+
 app.use(cors(corsOptions));
 
 // API Routes
@@ -41,6 +47,9 @@ app.use("*", (_, res) => {
 });
 // Start Server
 app.listen(PORT, () => {
-  connectDB(); // Ensure DB connection function works correctly
+  connectDB();
+  console.log("Mongo URI:", process.env.MONGO_URI);
+
+  // Ensure DB connection function works correctly
   console.log(`Server running at http://localhost:${PORT}`);
 });

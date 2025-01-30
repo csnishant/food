@@ -37,14 +37,16 @@ import {
 } from "./ui/sheet";
 import { Separator } from "./ui/separator";
 import { useUserStore } from "@/store/useUserStore";
+import { useThemeStore } from "@/store/useThemeStore";
 
 const Navbar = () => {
+  const { setTheme } = useThemeStore();
   const { user, loading, logout } = useUserStore();
   return (
     <div className="max-w-7xl mx-auto">
       <div className="flex items-center justify-between h-14">
         <Link to="/">
-          <h1 className="font-bold md:font-extrabold text-2xl">PatelEats</h1>
+          <h1 className="font-bold md:font-extrabold text-2xl">Arynis Eats</h1>
         </Link>
         <div className="hidden md:flex items-center gap-10">
           <div className="hidden md:flex items-center gap-6">
@@ -82,8 +84,12 @@ const Navbar = () => {
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
-                  <DropdownMenuItem>Light</DropdownMenuItem>
-                  <DropdownMenuItem>Dark</DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setTheme("light")}>
+                    Light
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setTheme("dark")}>
+                    Dark
+                  </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
@@ -105,7 +111,7 @@ const Navbar = () => {
             {loading ? (
               <Button
                 type="submit"
-                className=" w-full text-green hover:bg-hoverGreen hover:text-black">
+                className=" w-full text-button hover:bg-hover hover:text-black">
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                 please wait
               </Button>
@@ -113,7 +119,7 @@ const Navbar = () => {
               <Button
                 onClick={logout}
                 type="submit"
-                className=" w-full text-green hover:bg-hoverGreen hover:text-black">
+                className=" w-full   ">
                 Logout
               </Button>
             )}
@@ -131,6 +137,7 @@ const Navbar = () => {
 export default Navbar;
 
 const MobileNavbar = () => {
+  const { setTheme } = useThemeStore();
   const { user, loading, logout } = useUserStore();
 
   return (
@@ -145,7 +152,7 @@ const MobileNavbar = () => {
       </SheetTrigger>
       <SheetContent className="flex flex-col">
         <SheetHeader className="flex flex-row items-center justify-between mt-2">
-          <SheetTitle>PatelEats</SheetTitle>
+          <SheetTitle>Arynis Eats</SheetTitle>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" size="icon">
@@ -155,8 +162,12 @@ const MobileNavbar = () => {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuItem>Light</DropdownMenuItem>
-              <DropdownMenuItem>Dark</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setTheme("light")}>
+                Light
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setTheme("dark")}>
+                Dark
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </SheetHeader>
@@ -210,7 +221,7 @@ const MobileNavbar = () => {
               <AvatarImage src={user?.profilePicture} alt="profile" />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
-            <h1 className="font-bold">Patel Mernstack</h1>
+            <h1 className="font-bold">{user?.fullname}</h1>
           </div>
           {loading ? (
             <Button
@@ -223,7 +234,7 @@ const MobileNavbar = () => {
             <Button
               onClick={logout}
               type="submit"
-              className=" w-full text-green hover:bg-hoverGreen hover:text-black">
+              className=" w-full bg-button hover:bg-hover">
               Logout
             </Button>
           )}

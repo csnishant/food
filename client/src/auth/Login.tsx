@@ -3,7 +3,6 @@ import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { LoginInputState, userLoginSchema } from "@/schema/userSchema";
 import { useUserStore } from "@/store/useUserStore";
-
 import { Loader2, LockKeyhole, Mail } from "lucide-react";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -19,6 +18,12 @@ const Login = () => {
   const changeEventHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setInput({ ...input, [name]: value });
+  };
+
+  const ErrorMessage = ({ message }: { message?: string }) => {
+    return message ? (
+      <span className="text-xs text-red-500 ">{message} </span>
+    ) : null;
   };
   const loginSubmitHandler = async (e: FormEvent) => {
     e.preventDefault();
@@ -57,11 +62,10 @@ const Login = () => {
               value={input.email}
               onChange={changeEventHandler}
               className="pl-10 focus-visible:ring-1"
+              autoComplete="email"
             />
             <Mail className="absolute inset-y-2 left-2 text-gray-500 pointer-events-none" />
-            {errors && (
-              <span className="text-xs text-red-500">{errors.email} </span>
-            )}
+            <ErrorMessage message={errors.email} />
           </div>
         </div>
         <div className="mb-4">
@@ -73,25 +77,24 @@ const Login = () => {
               value={input.password}
               onChange={changeEventHandler}
               className="pl-10 focus-visible:ring-1"
+              autoComplete="current-password"
             />
             <LockKeyhole className="absolute inset-y-2 left-2 text-gray-500 pointer-events-none" />
-            {errors && (
-              <span className="text-xs text-red-500">{errors.password} </span>
-            )}
+            <ErrorMessage message={errors.password} />
           </div>
         </div>
         <div className="mb-10">
           {loading ? (
             <Button
               type="submit"
-              className=" w-full text-green hover:bg-hoverGreen hover:text-black">
+              className=" w-full text-button hover:bg-hover hover:text-black ">
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
               please wait
             </Button>
           ) : (
             <Button
               type="submit"
-              className=" w-full text-green hover:bg-hoverGreen hover:text-black">
+              className=" w-full bg-button hover:bg-hover   ">
               Login
             </Button>
           )}
